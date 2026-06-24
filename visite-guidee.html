@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Scroll – Visite guidée</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #222;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar .logo {
+      font-size: 20px;
+      font-weight: bold;
+      background: linear-gradient(to right, #00ff88, #00ccff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .navbar .back-btn {
+      color: #00ff88;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 8px 16px;
+      border: 1px solid #00ff88;
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+    .navbar .back-btn:hover {
+      background: #00ff88;
+      color: #121212;
+    }
+
+    /* ========== CADRE VIDÉO ========== */
+    .video-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: 80px auto 40px;
+      background: #111;
+      border-radius: 24px;
+      border: 1px solid #2a2a2a;
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* 16:9 */
+      background: #0a0a0a;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .video-container video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: #0a0a0a;
+    }
+
+    /* ========== INFOS SOUS LA VIDÉO ========== */
+    .video-info {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .video-info h2 {
+      font-size: 22px;
+      color: #00ff88;
+      margin-bottom: 6px;
+    }
+    .video-info p {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #1a1a1a;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #00ff88;
+      border: 1px solid #00ff88;
+      margin-top: 10px;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 640px) {
+      .navbar .logo {
+        font-size: 16px;
+      }
+      .video-wrapper {
+        padding: 12px;
+        margin-top: 70px;
+      }
+      .video-info h2 {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar">
+    <span class="logo">Tech Scroll</span>
+    <a href="index.html" class="back-btn">← Retour</a>
+  </nav>
+
+  <!-- ========== CADRE VIDÉO ========== -->
+  <div class="video-wrapper">
+    <div class="video-container">
+      <!-- 
+        Remplace le src par le chemin de ta vidéo.
+        Exemple : src="video/visite-guidee.mp4"
+      -->
+      <video controls autoplay muted>
+        <source src="Guide.mp4" type="video/mp4" />
+        Ton navigateur ne supporte pas la lecture vidéo.
+      </video>
+    </div>
+
+    <div class="video-info">
+      <h2>🎬 Visite guidée de Tech Scroll</h2>
+      <p>Regarde cette vidéo pour comprendre comment utiliser l'application : permissions, launcher, configuration, mode focus, overlays, réveil et multi-fenêtres.</p>
+      <span class="badge">⏱️ 2 min 58</span>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ========== CODE PYTHON POUR GÉNÉRER L'AUDIO ================ -->
+  <!-- ============================================================ -->
+  <!--
+    Voici un script Python (avec gTTS) qui génère un fichier audio
+    expliquant toutes les étapes de Tech Scroll.
+
+    Tu peux l'exécuter dans ton terminal :
+
+    pip install gTTS
+    python generate_audio.py
+
+    Le fichier audio sera sauvegardé sous "tech_scroll_guide.mp3".
+
+    Tu pourras ensuite l'utiliser pour ta vidéo (montage avec l'image
+    de ton écran ou une démonstration enregistrée).
+
+    ------------------------------------------------
+    CODE PYTHON (à copier dans un fichier generate_audio.py)
+    ------------------------------------------------
+
+    from gtts import gTTS
+    import os
+
+    texte = """
+    Bienvenue dans la visite guidée de Tech Scroll.
+
+    Étape 1 : Accepte les permissions.
+    Au premier lancement, Tech Scroll te demande trois permissions.
+    Afficher par-dessus les autres applications, accès aux données d'utilisation, et notifications.
+    Sans elles, les overlays de blocage et le mode focus ne peuvent pas fonctionner.
+
+    Étape 2 : Définis Tech Scroll comme launcher.
+    Un popup apparaîtra au deuxième ou troisième lancement.
+    Accepte de remplacer ton écran d'accueil.
+    Sinon, les overlays ne s'afficheront pas quand tu es dans une autre application.
+
+    Étape 3 : Configure ton profil.
+    Appuie sur le bouton engrenage en bas à droite.
+    Remplis ton prénom, choisis ton heure de réveil, sélectionne trois applications pour le matin.
+    Les applications productives sont pour le travail. Les applications relax sont les distrayantes.
+    Et les quick relax sont trois applications toujours accessibles.
+
+    Étape 4 : Définis tes plages de travail.
+    Dans le menu engrenage, descends jusqu'à "Plages de travail".
+    Choisis un jour et ajoute une plage, par exemple de huit heures à midi.
+    Plusieurs plages par jour sont possibles. Le Mode Focus s'activera automatiquement.
+
+    Le Mode Focus en action.
+    Quand le focus est actif, les applications relax sont grisées avec un cadenas.
+    Clique dessus et un popup te propose de débloquer cinq minutes.
+    Après cinq minutes, l'application est automatiquement rebloquée.
+
+    L'overlay de blocage.
+    Quand les cinq minutes sont écoulées, un popup noir apparaît par-dessus l'application que tu utilisais.
+    Même dans TikTok. Tu dois appuyer sur "Fermer". Impossible de tricher.
+
+    Le réveil matinal.
+    Chaque matin, un popup t'accueille avec les applications que tu as choisies.
+    Jusqu'à trois rappels dans ta plage de réveil.
+    Au troisième, on te propose d'activer le Mode Focus.
+
+    Les multi-fenêtres.
+    Dans le menu en bas à droite, clique sur le bouton écran partagé.
+    Sélectionne deux applications et clique sur "Écran partagé".
+    Elles s'ouvrent côte à côte.
+
+    C'est tout ! Tu connais maintenant tout ce qu'il faut pour utiliser Tech Scroll.
+    Le mode focus s'active automatiquement. Les applications relax sont bloquées.
+    Tu peux les débloquer cinq minutes. Chaque matin, ton coach te réveille.
+    Bonne productivité !
+    """
+
+    # Génération de l'audio en français
+    tts = gTTS(text=texte, lang='fr', slow=False)
+    tts.save("tech_scroll_guide.mp3")
+
+    print("✅ Audio généré avec succès : tech_scroll_guide.mp3")
+  -->
+
+</body>
+</html>
