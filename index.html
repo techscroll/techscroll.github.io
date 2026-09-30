@@ -557,13 +557,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     
     <a href="Launcher.apk" 
+       id="downloadBtn"
        class="btn btn-primary" 
        style="font-size:18px;padding:16px 36px;"
-       onclick="gtag('event', 'download_apk', {'event_category': 'engagement', 'event_label': 'tech_scroll_v1.1', 'value': 1});">
+       data-umami-event="download-apk"
+       data-umami-event-version="v1.1">
         📥 Télécharger l'APK (v1.1)
     </a>
-    <p style="margin-top:14px;font-size:11px;color:#666;">Compatible Android 7.0+ • 11 Mo • Version 1.1</p>
+    <p style="margin-top:14px;font-size:11px;color:#666;">Compatible Android 7.0+ • 12 Mo • Version 1.1</p>
 </div>
+
+<script>
+// Tracking téléchargement (GA4 + Umami)
+(function() {
+    var btn = document.getElementById('downloadBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var url = this.getAttribute('href');
+        var navigate = false;
+        
+        function doNavigate() {
+            if (navigate) return;
+            navigate = true;
+            window.location.href = url;
+        }
+        
+        // GA4
+        if (typeof gtag === 'function') {
+            gtag('event', 'download_apk', {
+                'event_category': 'engagement',
+                'event_label': 'tech_scroll_v1.1',
+                'value': 1,
+                'event_callback': doNavigate
+            });
+        }
+        
+        // Sécurité : si GA4 ne répond pas en 1.5s, on lance quand même
+        setTimeout(doNavigate, 1500);
+    });
+})();
+</script>
 
 <!-- ==================== FOOTER ==================== -->
 <div class="footer">
